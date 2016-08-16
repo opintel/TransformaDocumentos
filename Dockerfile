@@ -10,7 +10,7 @@ RUN apt-get update && \
 	apt-get install -y supervisor python-virtualenv git && \
     virtualenv $FORMAT_HOME
 
-RUN git clone https://github.com/vaquer/HerramientaFormatosGob.git /project && \
+RUN git clone https://github.com/opintel/TransformaDocumentos.git /project && \
     $FORMAT_HOME/bin/pip install -r /project/requirements.txt
     
 COPY format_celery.conf /etc/supervisor/conf.d/format_celery.conf

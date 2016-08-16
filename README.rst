@@ -19,16 +19,16 @@ Instalación Local
 =================
 Los siguientes pasos asumen que se han instalado los requerimientos señalados anteriormente. Correr los siguientes comandos::
 
-  git clone git@github.com:vaquer/HerramientaFormatosGob.git
+  git clone git@github.com:opintel/TransformaDocumentos.git
   virtualenv {{TU_VIRTUALENV}}
   . {{TU_VIRTUALENV}}/bin/activate
-  pip install -r HerramientaFormatosGob/requirements.txt
+  pip install -r TransformaDocumentos/requirements.txt
 
 Uso Local
 =========
 Para poder ver la herramienta corra el siguiente comando::
 
-   python HerramientaFormatosGob/FormatTools/manage.py runserver
+   python TransformaDocumentos/FormatTools/manage.py runserver
 
 Despues en el navegador::
 
@@ -40,8 +40,8 @@ Para los siguientes pasos se require tener instalada la plataforma Docker_ en el
 
 En el servidor aplicativo construimos la imagen del contenedor::
 
-  git clone git@github.com:vaquer/HerramientaFormatosGob.git
-  docker build -t {{nombre_de_imagen}} HerramientaFormatosGob/.
+  git clone git@github.com:opintel/TransformaDocumentos.git
+  docker build -t {{nombre_de_imagen}} TransformaDocumentos/.
 
 Una vez construida la imagen Docker de la herramienta, ya es posible generar el contenedor donde estara ejecutandose la herramienta. Un punto a considerar antes de avanzar con la creación del contenedor es que el contenedor necesita un volumen para poder trabajar, el volumen debera apuntar a la ruta interna /project/FormatTools/media del contenedor.
 
