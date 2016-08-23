@@ -1,4 +1,5 @@
 var typeFile;
+var delete_url = '';
 $("#feedback").hide();
 checkVisible();
 
@@ -67,7 +68,15 @@ var dropzone = new Dropzone('#my-awesome-dropzone', {
       var _this = this;
       // Create the remove button
       var removeButton = Dropzone.createElement("<a href='javascript:void(0)' id='remove-button'>Eliminar archivo</a>");
+      if(delete_url.trim()){
+        $.post(delete_url).success(function(response){
+          console.log(response.status);
 
+        }).fail(function(response){
+          console.log(response.status);
+          console.log(response.error);
+        }).always(function(){ delete_url = '';});
+      }
       // Listen to the click event
       removeButton.addEventListener("click", function(e) {
         // Make sure the button click doesn't submit the form:
@@ -105,6 +114,7 @@ var dropzone = new Dropzone('#my-awesome-dropzone', {
               text: "Archivo convertido correctamente",
               type: "success" },
             function(){
+              delete_url = response.link.replace('download', 'delete'); 
               window.open(response.link,'_blank');
             });
             $('.loading-document').css('display', 'none');

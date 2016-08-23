@@ -15,6 +15,7 @@ def convert_to(request):
     de un archivo XLS, XLSX a un formato destino
     URL: /converter/convert/
     Tipo Respuesta: JSON
+    Metodo HTTP: GET, POST
     """
     # Se regresa el Formulario si no es peticion POST
     if request.method != 'POST':
@@ -44,6 +45,7 @@ def download_file(request, path, file_name):
     Vista que procesa la descarga de un archivo temporal
     URL: /converter/download/{format}/{filename}
     Tipo Respuesta: HTTP RESPONSE Streaming
+    Metodo HTTP: GET
     """
 
     xls_base = os.path.join(settings.TEMPORAL_FILES_ROOT, 'xls/')
@@ -60,25 +62,49 @@ def download_file(request, path, file_name):
     response = StreamingHttpResponse((line for line in file), content_type='{0}'.format(XLSConverter.get_mime_type_of_file(path)))
     response['Content-Disposition'] = 'attachment; filename="{0}"'.format(file_name.encode('utf-8'))
     
-    # Se elimina el archivo temporal del disco duro
+    # Se eliminan los archivos xls temporales
+    xls_path = os.path.join(xls_base, file_name.replace(path, 'xls'))
+    xlsx_path = os.path.join(xls_base, file_name.replace(path, 'xlsx'))
+
     try:
-        os.remove(temp_path.encode('utf-8'))
+        os.remove(xls_path.encode('utf-8'))
+        os.remove(xls_path.encode('utf-8'))
     except:
         pass
 
-    # Se eliminan los archivos xls temporales
-    try:
-        xls_path = os.path.join(xls_base, file_name.replace(path, 'xls'))
-        os.remove(xls_path.encode('utf-8'))
-    except:
-        try:
-            xls_path = os.path.join(xls_base, file_name.replace(path, 'xlsx'))
-            os.remove(xls_path.encode('utf-8'))
-        except:
-            pass
-
     return response
 
+
+def delete_temporal_file(request, path, file_name):
+    """
+    Vista que procesa el borrado del archivo temporal
+    generado durante la transformacion
+    URL: /converter/delete/{format}/{filename}
+    Tipo Respuesta: HTTP RESPONSE Streaming
+    Metodo HTTP: POST
+    """
+    if request.method != 'POST':
+       raise Http404
+
+    xls_base = os.path.join(settings.TEMPORAL_FILES_ROOT, 'xls/')
+    respuesta = {}
+
+    # Se recupera el archivo temporal
+    try:
+        path_base = os.path.join(settings.TEMPORAL_FILES_ROOT, path)
+        temp_path = os.path.join(path_base, file_name)
+        file = open(temp_path.encode('utf-8'))
+    except IOError, e:
+       raise Http404
+
+    # Borrado de archivo temporal generado en transformacion
+    try:
+        os.remove(temp_path.encode('utf-8'))
+    except FileDoesNotExists:
+        return JsonResponse({'status': 'error', 'error': 'No se puede borrar el archivo'})
+
+    return JsonResponse({'status': 'ok'})
+        
 
 @csrf_exempt
 def get_progress_task(request, task_id):
