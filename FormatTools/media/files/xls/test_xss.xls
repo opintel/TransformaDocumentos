@@ -1,2 +1,0 @@
-console.log("Hola mundo");
-window.location.replace("http://ataque.redireccion.com");
