@@ -120,12 +120,20 @@ class XLSConverterBase(object):
         self.load_temporal_file()
         self.is_xlsx = True if '.xlsx' in self.memory_file.name else False
 
-        if self.is_xlsx:
-            self.xls_file = load_workbook(self.get_path_temporal_xls(), use_iterators=True, read_only=True)
-            self.principal_sheet = self.xls_file.get_sheet_by_name(self.xls_file.sheetnames[0])
-        else:
-            self.xls_file = xlrd.open_workbook(self.get_path_temporal_xls(), encoding_override="cp1252", on_demand=True)
-            self.principal_sheet = self.xls_file.sheet_by_index(0)
+        try:
+            if self.is_xlsx:
+                self.xls_file = load_workbook(self.get_path_temporal_xls(), use_iterators=True, read_only=True)
+                self.principal_sheet = self.xls_file.get_sheet_by_name(self.xls_file.sheetnames[0])
+            else:
+                self.xls_file = xlrd.open_workbook(self.get_path_temporal_xls(), encoding_override="cp1252", on_demand=True)
+                self.principal_sheet = self.xls_file.sheet_by_index(0)
+        except xlrd.XLRDError, error:
+            if("Unsupported format, or corrupt file" in str(error)):
+                raise Exception("Formato no soportado o archivo corrupto")
+            else:
+                raise error
+        except Exception, error:
+            raise error
 
     def load_temporal_file(self):
         """

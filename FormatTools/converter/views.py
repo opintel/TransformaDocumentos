@@ -96,7 +96,7 @@ def get_progress_task(request, task_id):
         try:
             return JsonResponse({'link': result.result, 'status': result.status})
         except Exception, e:
-            return JsonResponse({'status': 'ERROR', 'progress': str(e)})
+            return JsonResponse({'status': 'ERROR', 'error': str(e)})
 
     if result.status == 'PROGRESS':
         try:
