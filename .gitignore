@@ -1,3 +1,6 @@
 *.pyc
+*.DS_Store
+*.rar
+*.tarc:w
 FormatTools/performance.py
 FormatTools/functional_test.py
