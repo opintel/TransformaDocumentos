@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =  os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', True)
@@ -142,11 +142,11 @@ MEDIA_URL = '/media/'
 TEMPORAL_FILES_ROOT = os.path.join(MEDIA_ROOT, 'files/')
 
 # CELERY STUFF
-REDIS_TCP_ADDR_TASK = os.environ.get('REDISTASK_PORT_6379_TCP_ADDR', '0.0.0.0')
-REDIS_TCP_PORT_TAKS = os.environ.get('REDISTASK_PORT_6379_TCP_PORT', '6379')
+REDIS_TCP_ADDR_TASK = os.environ.get('REDIS_PORT_6379_TCP_ADDR', '0.0.0.0')
+REDIS_TCP_PORT_TAKS = os.environ.get('REDIS_PORT_6379_TCP_PORT', '6379')
 
-REDIS_TCP_ADDR_RESPONSE = os.environ.get('REDISRESP_PORT_6379_TCP_ADDR', '0.0.0.0')
-REDIS_TCP_PORT_RESPONSE = os.environ.get('REDISRESP_PORT_6379_TCP_PORT', '6378')
+REDIS_TCP_ADDR_RESPONSE = os.environ.get('REDIS_PORT_6379_TCP_ADDR', '0.0.0.0')
+REDIS_TCP_PORT_RESPONSE = os.environ.get('REDIS_PORT_6379_TCP_PORT', '6378')
 
 BROKER_URL = 'redis://{0}:{1}'.format(REDIS_TCP_ADDR_TASK, REDIS_TCP_PORT_TAKS)
 CELERY_RESULT_BACKEND = 'redis://{0}:{1}'.format(REDIS_TCP_ADDR_RESPONSE, REDIS_TCP_PORT_RESPONSE)
