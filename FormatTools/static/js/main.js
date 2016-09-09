@@ -106,7 +106,7 @@ var dropzone = new Dropzone('#my-awesome-dropzone', {
     function progress_show(){
       $.post(link_interval).success(function(response){
           if(response.status === 'PROGRESS'){
-            $('.percent').find('h4').html("% " + response.progress.current.toString())
+            $('.percent').find('h4').html(response.progress.current.toString() + " %");
           } else if (response.status === 'SUCCESS'){
             swal({
               confirmButtonText: "DESCARGAR",
@@ -118,8 +118,9 @@ var dropzone = new Dropzone('#my-awesome-dropzone', {
               window.open(response.link,'_blank');
             });
             $('.loading-document').css('display', 'none');
+            $('.percent').find('h4').html("0 %");
             clearInterval(interval_id);
-          } else if (response.status === 'ERROR'){
+          } else if (response.status === 'ERROR' || response.status == 'PENDING'){
             count_error ++;
             if (count_error > 3){
               clearInterval(interval_id);
@@ -133,7 +134,6 @@ var dropzone = new Dropzone('#my-awesome-dropzone', {
           }
       });
     }
-
 
     this.on("success", function(file, response, e) {
       if(response.status === 'ok'){
