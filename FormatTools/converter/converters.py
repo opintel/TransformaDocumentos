@@ -205,7 +205,7 @@ class XLSConverterBase(object):
         """
         Funcion que devuelve el link de descarga del archivo
         """
-        return '{0}converter/download/{1}/{2}'.format(settings.FQDN, self.get_format_type(), self.get_name_file())
+        return 'converter/download/{0}/{1}'.format(self.get_format_type(), self.get_name_file())
 
     def convert(self):
         """ Funcion que convierte el archivo xls

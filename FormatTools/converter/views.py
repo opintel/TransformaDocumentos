@@ -35,7 +35,7 @@ def convert_to(request):
     result_celery = transform_file.delay(xls_file_path, format_to, xls_file.name)
     
     try:
-        return JsonResponse({'status': 'ok', 'link': '{0}converter/progress/{1}/'.format(settings.FQDN, result_celery.task_id)})
+        return JsonResponse({'status': 'ok', 'link': '/converter/progress/{0}/'.format(result_celery.task_id)})
     except Exception, convert_error:
         return JsonResponse({'status': 'error', 'error': '{0}'.format(convert_error)})
 
