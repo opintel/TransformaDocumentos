@@ -138,7 +138,7 @@ var dropzone = new Dropzone('#my-awesome-dropzone', {
     this.on("success", function(file, response, e) {
       if(response.status === 'ok'){
         link_interval = response.link
-        $('.percent').find('h4').html("% 0")
+        $('.percent').find('h4').html("0 %")
         interval_id = setInterval(progress_show, 1000)
       }
 

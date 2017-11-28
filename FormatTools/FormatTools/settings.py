@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'converter.context_processors.global_conf'
             ],
         },
     },
@@ -132,7 +133,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/'),
 ]
 
-STATIC_URL = '/static/formattools/'
+STATIC_URL = os.environ.get('STATIC_URL', '/converter/static/')
 
 # MEDIA SETTINGS
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
@@ -154,6 +155,9 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Africa/Nairobi'
+
+CDN_GOB_ROOT_URL = os.environ.get('CDN_GOB_ROOT_URL', '//cdn.datos.gob.mx/')
+
 from kombu import serialization
 try:
     serialization.registry._decoders.pop("application/x-python-serialize")
