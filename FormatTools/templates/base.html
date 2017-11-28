@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width">
     <title>Herramienta de formatos</title>
     <link rel="shortcut icon" href="img/favicon.ico">
-    <link rel="stylesheet" href="http://datos.gob.mx/static/css/vendor.2107989e.css">
-    <link rel="stylesheet" href="http://datos.gob.mx/static/css/style.4a96c47a.css">
     <link rel="import" href="{{settings.CDN_GOB_ROOT_URL}}bower_components/polymer/polymer.html">
     <link rel="import" href="{{settings.CDN_GOB_ROOT_URL}}bower_components/dgm-navbar/dgm-navbar.html">
     <link rel="import" href="{{settings.CDN_GOB_ROOT_URL}}bower_components/dgm-footer/dgm-footer.html">
@@ -19,7 +17,7 @@
     {% endblock content %}
     <dgm-footer></dgm-footer>
     {% block script_js %}{% endblock %}
-    <script src="http://datos.gob.mx/ckan/assets/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="{{settings.CDN_GOB_ROOT_URL}}bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <script type="text/javascript">
         function getCookie(name) {
             var cookieValue = null;
